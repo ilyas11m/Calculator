@@ -10,7 +10,7 @@ public class Calc {
         private JPanel panelButtons;
         private JTextField calculationsFrame;
         private Font font;
-        private JButton button1, button2, button3, button4, button5;
+        private JButton button1, button2, button3, button4, button5, button6;
 
         Frame(){
             mainFrame = new JFrame("Calculator");
@@ -36,6 +36,7 @@ public class Calc {
             button3 = new JButton("%");
             button4 = new JButton("x");
             button5 = new JButton("=");
+            button6 = new JButton("3");
 
             panelCalc.add(calculationsFrame);
             panelButtons.add(button1);
@@ -43,6 +44,7 @@ public class Calc {
             panelButtons.add(button3);
             panelButtons.add(button4);
             panelButtons.add(button5);
+            panelButtons.add(button6);
             mainFrame.add(panelCalc, BorderLayout.NORTH);
             mainFrame.add(panelButtons);
             mainFrame.setVisible(true);
