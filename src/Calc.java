@@ -1,55 +1,157 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class Calc {
-    static class Frame {
-        private JFrame mainFrame;
-        private JPanel panelCalc;
-        private JPanel panelButtons;
-        private JTextField calculationsFrame;
-        private Font font;
-        private JButton button1, button2, button3, button4, button5;
+public class Calc extends KeyAdapter implements ActionListener {
 
-        Frame(){
-            mainFrame = new JFrame("Calculator");
-            mainFrame.setSize(340, 525);
-            mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            mainFrame.setLayout(new BorderLayout());
-            mainFrame.setLocationRelativeTo(null);
-            mainFrame.setResizable(false);
+    private JFrame mainFrame;
+    private JPanel panelOfDisplay;
+    private JPanel panelOfExpButtons;
+    private JPanel panelOfIntButtons;
+    private JTextField calculationsFrame;
+    private JButton[] intButtons = new JButton[10];
+    private JButton[] expButtons = new JButton[8];
+    private JButton plusButton, subButton, divButton, mulButton, equalButton, decButton, deleteButton, clearButton;
+    Double num1, num2, result;
+    char operator;
+    private Font font;
 
-            panelCalc = new JPanel();
-            panelCalc.setPreferredSize(new Dimension(300, 100)); // Устанавливаем большую высоту для панели
 
-            calculationsFrame = new JTextField();
-            calculationsFrame.setPreferredSize(new Dimension(300, 100)); // Устанавливаем больший размер текстового поля
-
-            font = new Font("Verdana", Font.ROMAN_BASELINE,30);
-            calculationsFrame.setFont(font);
-
-            panelButtons = new JPanel();
-            button1 = new JButton("+");
-            button1 = new JButton("+");
-            button2 = new JButton("-");
-            button3 = new JButton("%");
-            button4 = new JButton("x");
-            button5 = new JButton("=");
-
-            panelCalc.add(calculationsFrame);
-            panelButtons.add(button1);
-            panelButtons.add(button2);
-            panelButtons.add(button3);
-            panelButtons.add(button4);
-            panelButtons.add(button5);
-            mainFrame.add(panelCalc, BorderLayout.NORTH);
-            mainFrame.add(panelButtons);
-            mainFrame.setVisible(true);
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            String s = calculationsFrame.getText();
+            calculationsFrame.setText("");
+            for (int i = 0; i < s.length()-1; i++) {
+                calculationsFrame.setText(calculationsFrame.getText() + s.charAt(i));
+            }
+        }
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == intButtons[i]) {
+                calculationsFrame.setText(calculationsFrame.getText().concat(String.valueOf(i)));
+            }
+        }
+        if (e.getSource() == decButton) {
+            calculationsFrame.setText(calculationsFrame.getText().concat("."));
+        }
+        if (e.getSource() == plusButton) {
+            num1 = Double.parseDouble(calculationsFrame.getText());
+            operator = '+';
+            calculationsFrame.setText("");
+        }
+        if (e.getSource() == subButton) {
+            num1 = Double.parseDouble(calculationsFrame.getText());
+            operator = '-';
+            calculationsFrame.setText("");
+        }
+        if (e.getSource() == divButton) {
+            num1 = Double.parseDouble(calculationsFrame.getText());
+            operator = '%';
+            calculationsFrame.setText("");
+        }
+        if (e.getSource() == mulButton) {
+            num1 = Double.parseDouble(calculationsFrame.getText());
+            operator = '✕';
+            calculationsFrame.setText("");
+        }
+        if (e.getSource() == equalButton) {
+            num2 = Double.parseDouble(calculationsFrame.getText());
+            switch (operator) {
+                case '/':
+                    result = num1 / num2;
+                    break;
+                case '✕':
+                    result = num1 * num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '+':
+                    result = num1 + num2;
+                    break;
+            }
+            calculationsFrame.setText(String.valueOf(result));
+        }
+        if (e.getSource() == clearButton) {
+            calculationsFrame.setText("");
+        }
+        if (e.getSource() == deleteButton) {
+            String s = calculationsFrame.getText();
+            calculationsFrame.setText("");
+            for (int i = 0; i < s.length()-1; i++) {
+                calculationsFrame.setText(calculationsFrame.getText() + s.charAt(i));
+            }
         }
     }
 
+
+    Calc() {
+
+        font = new Font("Verdana", Font.PLAIN, 30);
+
+        mainFrame = new JFrame("Calculator");
+        mainFrame.setSize(340, 525);
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setResizable(true);
+
+        //Инициализация панели где показываются все вычисления
+        panelOfDisplay = new JPanel();
+
+        //Создание поля ввода на panelOfDisplay
+        calculationsFrame = new JTextField();
+        calculationsFrame.setPreferredSize(new Dimension(300, 100));
+        calculationsFrame.setFont(font);
+        panelOfDisplay.add(calculationsFrame);
+
+        //Инициализация панели где показываются кнопки с операциями
+        panelOfExpButtons = new JPanel();
+        panelOfExpButtons.setLayout(new FlowLayout());
+        plusButton = new JButton("+");
+        subButton = new JButton("-");
+        divButton = new JButton("/");
+        mulButton = new JButton("✕");
+        equalButton = new JButton("=");
+        decButton = new JButton(".");
+        deleteButton = new JButton("Delete");
+        clearButton = new JButton("Clear");
+        expButtons[0] = plusButton;
+        expButtons[1] = subButton;
+        expButtons[2] = divButton;
+        expButtons[3] = mulButton;
+        expButtons[4] = equalButton;
+        expButtons[5] = decButton;
+        expButtons[6] = deleteButton;
+        expButtons[7] = clearButton;
+        for (JButton expButton : expButtons) {
+            expButton.addActionListener(this);
+            expButton.setFocusable(false);
+        }
+        for (JButton button : expButtons) {
+            panelOfExpButtons.add(button);
+        }
+
+        //Инициализация панели где показываются кнопки с цифрами
+        panelOfIntButtons = new JPanel();
+        panelOfIntButtons.setLayout(new FlowLayout());
+        for (int i = 0; i < intButtons.length; i++) {
+            intButtons[i] = new JButton("" + i);
+            intButtons[i].addActionListener(this);
+            intButtons[i].setFocusable(false);
+            panelOfIntButtons.add(intButtons[i]);
+        }
+
+        mainFrame.add(panelOfDisplay, BorderLayout.NORTH);
+        mainFrame.add(panelOfExpButtons, BorderLayout.CENTER);
+        mainFrame.add(panelOfIntButtons, BorderLayout.SOUTH);
+        mainFrame.setVisible(true);
+    }
     public static void main(String[] args) {
-        new Frame();
+        Calc g = new Calc();
     }
 }
+
