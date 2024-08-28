@@ -6,8 +6,7 @@ public class Calc extends KeyAdapter implements ActionListener {
 
     private JFrame mainFrame;
     private JPanel panelOfDisplay;
-    private JPanel panelOfExpButtons;
-    private JPanel panelOfIntButtons;
+    private JPanel panelOfButtons;
     private JTextField calculationsFrame;
     private JButton[] intButtons = new JButton[10];
     private JButton[] expButtons = new JButton[8];
@@ -104,13 +103,14 @@ public class Calc extends KeyAdapter implements ActionListener {
 
         //Создание поля ввода на panelOfDisplay
         calculationsFrame = new JTextField();
+        calculationsFrame.setLayout(new FlowLayout());
         calculationsFrame.setPreferredSize(new Dimension(300, 100));
         calculationsFrame.setFont(font);
         panelOfDisplay.add(calculationsFrame);
 
         //Инициализация панели где показываются кнопки с операциями
-        panelOfExpButtons = new JPanel();
-        panelOfExpButtons.setLayout(new FlowLayout());
+        panelOfButtons = new JPanel();
+        panelOfButtons.setLayout(new GridLayout(5,4));
         plusButton = new JButton("+");
         subButton = new JButton("-");
         divButton = new JButton("/");
@@ -132,26 +132,23 @@ public class Calc extends KeyAdapter implements ActionListener {
             expButton.setFocusable(false);
         }
         for (JButton button : expButtons) {
-            panelOfExpButtons.add(button);
+            panelOfButtons.add(button);
         }
 
-        //Инициализация панели где показываются кнопки с цифрами
-        panelOfIntButtons = new JPanel();
-        panelOfIntButtons.setLayout(new FlowLayout());
+        //Инициализация кнопок с цифрами
         for (int i = 0; i < intButtons.length; i++) {
             intButtons[i] = new JButton("" + i);
             intButtons[i].addActionListener(this);
             intButtons[i].setFocusable(false);
-            panelOfIntButtons.add(intButtons[i]);
+            panelOfButtons.add(intButtons[i]);
         }
 
         mainFrame.add(panelOfDisplay, BorderLayout.NORTH);
-        mainFrame.add(panelOfExpButtons, BorderLayout.CENTER);
-        mainFrame.add(panelOfIntButtons, BorderLayout.SOUTH);
+        mainFrame.add(panelOfButtons, BorderLayout.CENTER);;
         mainFrame.setVisible(true);
     }
     public static void main(String[] args) {
-        Calc g = new Calc();
+        Calc f = new Calc();
     }
 }
 
