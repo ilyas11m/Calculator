@@ -48,7 +48,7 @@ public class Calc extends KeyAdapter implements ActionListener {
         }
         if (e.getSource() == divButton) {
             num1 = Double.parseDouble(calculationsFrame.getText());
-            operator = '%';
+            operator = '/';
             calculationsFrame.setText("");
         }
         if (e.getSource() == mulButton) {
@@ -103,7 +103,7 @@ public class Calc extends KeyAdapter implements ActionListener {
 
         //Создание поля ввода на panelOfDisplay
         calculationsFrame = new JTextField();
-        calculationsFrame.setLayout(new FlowLayout());
+        calculationsFrame.setLayout(new GridLayout());
         calculationsFrame.setPreferredSize(new Dimension(300, 100));
         calculationsFrame.setFont(font);
         panelOfDisplay.add(calculationsFrame);
@@ -145,6 +145,8 @@ public class Calc extends KeyAdapter implements ActionListener {
 
         mainFrame.add(panelOfDisplay, BorderLayout.NORTH);
         mainFrame.add(panelOfButtons, BorderLayout.CENTER);;
+        panelOfButtons.setBackground(Color.DARK_GRAY);
+        calculationsFrame.setForeground(Color.BLUE);
         mainFrame.setVisible(true);
     }
     public static void main(String[] args) {
