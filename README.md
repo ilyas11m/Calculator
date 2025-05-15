@@ -29,4 +29,4 @@
 2. Склонируйте репозиторий:
 
    ```bash
-   git clone https://github.com/ilyas11m/Calculatoror.git
+   git clone https://github.com/ilyas11m/Calculator.git
