@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 public class Calc extends KeyAdapter implements ActionListener {
 
+
     private JFrame mainFrame;
     private JPanel panelOfDisplay;
     private JPanel panelOfButtons;
@@ -21,11 +22,12 @@ public class Calc extends KeyAdapter implements ActionListener {
         if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             String s = calculationsFrame.getText();
             calculationsFrame.setText("");
-            for (int i = 0; i < s.length()-1; i++) {
+            for (int i = 0; i < s.length() - 1; i++) {
                 calculationsFrame.setText(calculationsFrame.getText() + s.charAt(i));
             }
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < 10; i++) {
@@ -80,7 +82,7 @@ public class Calc extends KeyAdapter implements ActionListener {
         if (e.getSource() == deleteButton) {
             String s = calculationsFrame.getText();
             calculationsFrame.setText("");
-            for (int i = 0; i < s.length()-1; i++) {
+            for (int i = 0; i < s.length() - 1; i++) {
                 calculationsFrame.setText(calculationsFrame.getText() + s.charAt(i));
             }
         }
@@ -98,19 +100,16 @@ public class Calc extends KeyAdapter implements ActionListener {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setResizable(true);
 
-        //Инициализация панели где показываются все вычисления
         panelOfDisplay = new JPanel();
 
-        //Создание поля ввода на panelOfDisplay
         calculationsFrame = new JTextField();
         calculationsFrame.setLayout(new GridLayout());
         calculationsFrame.setPreferredSize(new Dimension(300, 100));
         calculationsFrame.setFont(font);
         panelOfDisplay.add(calculationsFrame);
 
-        //Инициализация панели где показываются кнопки с операциями
         panelOfButtons = new JPanel();
-        panelOfButtons.setLayout(new GridLayout(5,4));
+        panelOfButtons.setLayout(new GridLayout(5, 4));
         plusButton = new JButton("+");
         subButton = new JButton("-");
         divButton = new JButton("/");
@@ -127,6 +126,7 @@ public class Calc extends KeyAdapter implements ActionListener {
         expButtons[5] = decButton;
         expButtons[6] = deleteButton;
         expButtons[7] = clearButton;
+
         for (JButton expButton : expButtons) {
             expButton.addActionListener(this);
             expButton.setFocusable(false);
@@ -135,7 +135,6 @@ public class Calc extends KeyAdapter implements ActionListener {
             panelOfButtons.add(button);
         }
 
-        //Инициализация кнопок с цифрами
         for (int i = 0; i < intButtons.length; i++) {
             intButtons[i] = new JButton("" + i);
             intButtons[i].addActionListener(this);
@@ -144,13 +143,15 @@ public class Calc extends KeyAdapter implements ActionListener {
         }
 
         mainFrame.add(panelOfDisplay, BorderLayout.NORTH);
-        mainFrame.add(panelOfButtons, BorderLayout.CENTER);;
+        mainFrame.add(panelOfButtons, BorderLayout.CENTER);
         panelOfButtons.setBackground(Color.DARK_GRAY);
         calculationsFrame.setForeground(Color.BLUE);
         mainFrame.setVisible(true);
     }
+
     public static void main(String[] args) {
         Calc f = new Calc();
+        System.out.println(f.getClass());
     }
 }
 
